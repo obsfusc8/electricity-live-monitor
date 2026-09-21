@@ -15,7 +15,7 @@ class ClickHousePipeline:
     def open_spider(self, spider):
         # Initialize databases and tables
         create_db = f"CREATE DATABASE IF NOT EXISTS {self.db}"
-        requests.post(self.url, data=create_db, auth=self.auth)
+        requests.post(self.url, params={'query': create_db}, auth=self.auth)
         
         # PGCB Table
         create_pgcb_table = f"""
@@ -38,7 +38,7 @@ class ClickHousePipeline:
         ) ENGINE = MergeTree()
         ORDER BY (date, time)
         """
-        requests.post(self.url, data=create_pgcb_table, auth=self.auth)
+        requests.post(self.url, params={'query': create_pgcb_table}, auth=self.auth)
 
         # BPDB Table
         create_bpdb_table = f"""
@@ -58,20 +58,19 @@ class ClickHousePipeline:
         ) ENGINE = MergeTree()
         ORDER BY (date, station_name)
         """
-        requests.post(self.url, data=create_bpdb_table, auth=self.auth)
+        requests.post(self.url, params={'query': create_bpdb_table}, auth=self.auth)
 
     def process_item(self, item, spider):
         if spider.name == 'pgcb':
             query = f"INSERT INTO {self.db}.pgcb_generation FORMAT JSONEachRow"
-            # Sanitize and handle empty strings by putting 0.0 or keeping as string
             data = json.dumps(dict(item))
-            res = requests.post(self.url, data=query + '\\n' + data, auth=self.auth)
+            res = requests.post(self.url, params={'query': query}, data=data, auth=self.auth)
             if res.status_code != 200:
                 logging.error(f"ClickHouse Insert Error: {res.text}")
         elif spider.name == 'bpdb':
             query = f"INSERT INTO {self.db}.bpdb_generation FORMAT JSONEachRow"
             data = json.dumps(dict(item))
-            res = requests.post(self.url, data=query + '\\n' + data, auth=self.auth)
+            res = requests.post(self.url, params={'query': query}, data=data, auth=self.auth)
             if res.status_code != 200:
                 logging.error(f"ClickHouse Insert Error: {res.text}")
         return item
