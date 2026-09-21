@@ -1,4 +1,4 @@
-# ⚡ Bangladesh Power Grid Live Monitor (PowerGrid-BD)
+#  Bangladesh Power Grid Live Monitor (PowerGrid-BD)
 
 [![Svelte](https://img.shields.io/badge/Frontend-Svelte%20%2B%20Vite-FF3E00?logo=svelte&logoColor=white)](https://svelte.dev/)
 [![Fastify](https://img.shields.io/badge/Backend-Fastify-000000?logo=fastify&logoColor=white)](https://fastify.dev/)
@@ -12,21 +12,21 @@ Designed with a modern, clutter-free **Material Design 3** interface, responsive
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
-### 1. ⚡ Real-Time Grid Monitoring
+### 1.  Real-Time Grid Monitoring
 - **Live Generation Curve**: 24-hour continuous generation tracking with hourly resolution.
 - **Dynamic Fuel Overlays**: Segmented view of real-time electricity output across **Natural Gas**, **Coal**, **Liquid Fuel (HFO/HSD)**, **Hydro**, **Solar**, and **Wind**.
 - **Day vs. Evening Peak Indicators**: Automated identification and marking of daily system peak demand events.
 
-### 2. 🔌 Cross-Border Electricity Imports
+### 2.  Cross-Border Electricity Imports
 - Tracks cross-border interconnector transfers into Bangladesh:
   - **Adani Godda (Jharkhand)**: 1,600 MW dedicated transmission line
   - **Bheramara HVDC (West Bengal)**: 500 kV Back-to-Back HVDC Station
   - **Tripura / Cumilla**: 400 kV Synchronous AC link
   - **Nepal Hydro**: Trilateral cross-border electricity trade via Indian grid
 
-### 3. 🏭 Power Plants Explorer & Fleet Registry
+### 3.  Power Plants Explorer & Fleet Registry
 - **Searchable & Filterable Table**: Comprehensive inventory of power stations across Bangladesh (e.g., Payra, Rampal, Matarbari, Bibiyana, Ghorashal, Sirajganj, Ashuganj, Haripur, Meghnaghat).
 - **Regional Filtering**: Filter by division/area (Dhaka, Chattogram, Khulna, Rajshahi, Barishal, Sylhet, Rangpur, Comilla, Mymensingh).
 - **Operational Health Tags**:
@@ -34,7 +34,7 @@ Designed with a modern, clutter-free **Material Design 3** interface, responsive
   - 🟡 **Derated**: Running at partial load due to fuel constraints or minor defects.
   - 🔴 **Offline / Outage**: Zero MW generation with detailed breakdown of root causes.
 
-### 4. ⚠️ Loadshedding & Outage Command Center
+### 4.  Loadshedding & Outage Command Center
 - **Automated Grid Stress Meter**: Real-time stress ratio calculation comparing current generation against operational capacity.
 - **Dynamic Risk Categorization**:
   - **Stable**: Generation adequately meeting demand with healthy operating reserve.
@@ -43,22 +43,22 @@ Designed with a modern, clutter-free **Material Design 3** interface, responsive
 - **Outage Driver Breakdown**: Root-cause analysis of unavailable capacity (Gas shortage/low pressure, scheduled boiler overhauls, turbine maintenance, transformer faults).
 - **Unavailable Capacity Split**: Planned Maintenance (MW) vs. Forced Emergency Shutdowns (MW).
 
-### 5. 📈 30-Day Historical Trends & Analytics
+### 5.  30-Day Historical Trends & Analytics
 - Multi-week time-series tracking evening peak demand vs. actual generation.
 - Historical unserved energy (MKWHr) and loadshedding deficit curves.
 - System averages: 30-day average peak generation, demand averages, and cumulative energy supplied.
 
-### 6. 🗺️ Regional Zonal Distribution
+### 6.  Regional Zonal Distribution
 - Division-by-division stacked energy generation analysis (MKWHr) tracking how much power is produced across each administrative region.
 
-### 7. 🎨 Modern Minimal UI & UX
+### 7.  Modern Minimal UI & UX
 - Material Design 3 expressive color palette with automatic and manual **Dark / Light Mode**.
 - Smooth Chart.js animations, glassmorphism headers, and mobile-friendly responsive layout.
 - High-resilience architecture: backend serves realistic seed fallback data if the database is cold or syncing, ensuring zero downtime.
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ```mermaid
 flowchart LR
@@ -94,7 +94,7 @@ flowchart LR
 
 ---
 
-## 💻 Tech Stack
+##  Tech Stack
 
 | Component | Technology | Purpose |
 | :--- | :--- | :--- |
@@ -108,7 +108,7 @@ flowchart LR
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 electricity-live-monitor/
@@ -143,7 +143,7 @@ electricity-live-monitor/
 
 ---
 
-## 🚀 Getting Started Locally
+##  Getting Started Locally
 
 ### Prerequisites
 - **Node.js** (v18 or higher)
@@ -235,7 +235,7 @@ The `.github/workflows/scrape.yml` workflow will automatically run every hour to
 
 ---
 
-## 📡 API Reference
+##  API Reference
 
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
@@ -250,7 +250,7 @@ The `.github/workflows/scrape.yml` workflow will automatically run every hour to
 
 ---
 
-## 📜 Data Sources & Attribution
+##  Data Sources & Attribution
 - [Power Grid Bangladesh PLC (PGCB)](https://erp.powergrid.gov.bd/w/generations/view_generations) — Hourly national generation data.
 - [Bangladesh Power Development Board (BPDB)](https://misc.bpdb.gov.bd/daily-generation) — Daily generation archives, plant capacities, and operational status reports.
 
