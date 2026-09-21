@@ -1,16 +1,21 @@
 import requests
 import json
 import logging
+import os
 
 class ClickHousePipeline:
     def __init__(self):
-        self.url = 'http://localhost:8123/'
-        self.db = 'powergrid'
+        self.url = os.getenv('CLICKHOUSE_URL', 'http://localhost:8123/')
+        self.db = os.getenv('CLICKHOUSE_DB', 'powergrid')
+        self.user = os.getenv('CLICKHOUSE_USER', 'default')
+        self.password = os.getenv('CLICKHOUSE_PASSWORD', '')
+        self.auth = (self.user, self.password) if self.password else None
+
         
     def open_spider(self, spider):
         # Initialize databases and tables
         create_db = f"CREATE DATABASE IF NOT EXISTS {self.db}"
-        requests.post(self.url, data=create_db)
+        requests.post(self.url, data=create_db, auth=self.auth)
         
         # PGCB Table
         create_pgcb_table = f"""
@@ -33,7 +38,7 @@ class ClickHousePipeline:
         ) ENGINE = MergeTree()
         ORDER BY (date, time)
         """
-        requests.post(self.url, data=create_pgcb_table)
+        requests.post(self.url, data=create_pgcb_table, auth=self.auth)
 
         # BPDB Table
         create_bpdb_table = f"""
@@ -53,20 +58,20 @@ class ClickHousePipeline:
         ) ENGINE = MergeTree()
         ORDER BY (date, station_name)
         """
-        requests.post(self.url, data=create_bpdb_table)
+        requests.post(self.url, data=create_bpdb_table, auth=self.auth)
 
     def process_item(self, item, spider):
         if spider.name == 'pgcb':
             query = f"INSERT INTO {self.db}.pgcb_generation FORMAT JSONEachRow"
             # Sanitize and handle empty strings by putting 0.0 or keeping as string
             data = json.dumps(dict(item))
-            res = requests.post(self.url, data=query + '\\n' + data)
+            res = requests.post(self.url, data=query + '\\n' + data, auth=self.auth)
             if res.status_code != 200:
                 logging.error(f"ClickHouse Insert Error: {res.text}")
         elif spider.name == 'bpdb':
             query = f"INSERT INTO {self.db}.bpdb_generation FORMAT JSONEachRow"
             data = json.dumps(dict(item))
-            res = requests.post(self.url, data=query + '\\n' + data)
+            res = requests.post(self.url, data=query + '\\n' + data, auth=self.auth)
             if res.status_code != 200:
                 logging.error(f"ClickHouse Insert Error: {res.text}")
         return item

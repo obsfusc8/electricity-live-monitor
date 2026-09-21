@@ -41,9 +41,10 @@
 
   onMount(async () => {
     try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
       const [pgcbRes, bpdbRes] = await Promise.all([
-        fetch('http://localhost:3000/api/generation'),
-        fetch('http://localhost:3000/api/daily-generation')
+        fetch(`${API_URL}/api/generation`),
+        fetch(`${API_URL}/api/daily-generation`)
       ]);
 
       if (!pgcbRes.ok || !bpdbRes.ok) throw new Error('Failed to fetch data');
